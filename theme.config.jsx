@@ -1,4 +1,6 @@
 import { useConfig } from 'nextra-theme-docs'
+const currentYear = new Date().getFullYear();
+import { useRouter } from 'next/router'
 
 
 export default {
@@ -11,9 +13,30 @@ export default {
           </span>
         </>
       ),
+      head: () => {
+        const { asPath, defaultLocale, locale } = useRouter()
+        const { frontMatter } = useConfig()
+        const url =
+          'https://stem-lab-fpga.vercel.app' +
+          (defaultLocale === locale ? asPath : `/${locale}${asPath}`)
+     
+        return (
+          <>
+            <meta property="og:url" content={url} />
+            <meta property="og:title" content={frontMatter.title || 'STEM Lab FPGA: Inspiring STEM Education Through FPGA Technology'} />
+            <meta
+              property="og:description"
+              content={frontMatter.description || 'Welcome to STEM Lab FPGA! We are passionate engineering lecturers dedicated to promoting STEM education. Learn about FPGA, DE10-lite, and meet our team led by Jehovah Yii Zui Hon and Prof Madya Ir. Dr. Nurul Hazlina Noordin.'}
+            />
+          </>
+        )
+      },
     project: {
       link: 'https://github.com/hovahyii/STEM-Lab-FPGA'
     },
+    footer: {
+        text: `${currentYear} © STEM Lab UMPSA.`,
+      },
     docsRepositoryBase: 'https://github.com/hovahyii/STEM-Lab-FPGA',
     // banner: {
     //     key: '2.0-release',
@@ -57,6 +80,7 @@ export default {
               type: 'image/png'
             }
           ],
+   
           additionalMetaTags: [
             { content: 'STEM Lab FPGA: Inspiring STEM Education Through FPGA Technology', name: 'title'},
             { content: 'Welcome to STEM Lab FPGA! We are passionate engineering lecturers dedicated to promoting STEM education. Learn about FPGA, DE10-lite, and meet our team led by Jehovah Yii Zui Hon and Prof Madya Ir. Dr. Nurul Hazlina Noordin.', name: 'description'},
@@ -78,7 +102,9 @@ export default {
           twitter: {
             cardType: 'summary_large_image',
             site: 'https://stem-lab-fpga.vercel.app'
-          }
-        }
+          },
+
       }
+  
+    }
 }
