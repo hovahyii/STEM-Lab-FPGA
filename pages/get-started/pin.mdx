@@ -1,0 +1,47 @@
+## Pin assignment and Constraint generation
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/pin-assignment.png)
+
+
+In this section, you will make pin assignments for all the signals from the design which interact with outer world. Before making pin assignments, perform the following steps:
+
+1. Choose Processing > Start > Start Analysis & Synthesis in preparation for assigning pin locations. Click OK in the message window that appears after analysis and elaboration completes.
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/start-analysis.png)
+
+2. To make pin assignments that correlate to the hex_input[3:0] input pins and seven_seg_out[6:0] output pins, perform the following steps:  Choose Assignments > Pin Planner, which opens the Pin Planner, a spreadsheet-like table of specific pin assignments. The Pin Planner shows the designs pins. 
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/pin-planner.png)
+
+3. In the Location column next to each of the node names, add the coordinates(pin numbers) as shown from the tables below for the actual values to use with your DE10-Lite board(check manual for any particular pins you are looking for based on your design usage). Double-click in the Location column for any of the pins to open a drop-down list and type the pin number shown in the table. 
+Alternatively, you can select the pin from a drop-down list. For example, if you type C12 and press the Enter key, the Quartus  software fills in the full PIN_C12 location name for you. The software also keeps track of corresponding FPGA data such as the I/O bank and VREF Group. Each bank has a distinct color, which corresponds to the top-view wire bond drawing in the upper right window.
+
+| Node Name       | Direction | Location | I/O Bank | VREF Group | Current Strength | Slew Rate |
+|-----------------|-----------|----------|----------|------------|------------------|-----------|
+| hex_input[0]    | Input     | PIN_C10  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) |
+| hex_input[1]    | Input     | PIN_C11  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) |
+| hex_input[2]    | Input     | PIN_D12  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) |
+| hex_input[3]    | Input     | PIN_C12  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) |
+| seven_seg_out[0]| Output    | PIN_C14  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) | 2 (default) |
+| seven_seg_out[1]| Output    | PIN_E15  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) | 2 (default) |
+| seven_seg_out[2]| Output    | PIN_C15  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) | 2 (default) |
+| seven_seg_out[3]| Output    | PIN_C16  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) | 2 (default) |
+| seven_seg_out[4]| Output    | PIN_E16  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) | 2 (default) |
+| seven_seg_out[5]| Output    | PIN_D17  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) | 2 (default) |
+| seven_seg_out[6]| Output    | PIN_C17  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) | 2 (default) |
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/node-name.png)
+
+
+5. The **design.qsf** file should reflect these pin assignments once you have set them on pin planner.  
+- set_location_assignment PIN_C14 -to seven_seg_out[0] 
+- set_location_assignment PIN_E15 -to seven_seg_out[1] 
+- set_location_assignment PIN_C15 -to seven_seg_out[2] 
+- set_location_assignment PIN_C16 -to seven_seg_out[3] 
+- set_location_assignment PIN_E16 -to seven_seg_out[4] 
+- set_location_assignment PIN_D17 -to seven_seg_out[5] 
+- set_location_assignment PIN_C17 -to seven_seg_out[6] 
+- set_location_assignment PIN_C10 -to hex_input[0] 
+- set_location_assignment PIN_C11 -to hex_input[1] 
+- set_location_assignment PIN_D12 -to hex_input[2] 
+- set_location_assignment PIN_C12 -to hex_input[3]

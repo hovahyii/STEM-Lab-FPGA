@@ -1,0 +1,39 @@
+{
+    "index": "Lab Overview",
+    "about-de10": "DE10-Lite",
+    "get-started": "Get Started",
+    "common-error": "Common Error",
+    "references": "References",
+    "---": {
+        "type": "separator"
+      },
+    "github_link": {
+        "title": "Source Code",
+        "href": "https://github.com/hovahyii/STEM-Lab-FPGA",
+        "display": "hidden"
+      },
+      "about":  {
+        "title": "About",
+        "type": "page"
+      },
+    "contact":  {
+        "title": "Contact Us",
+        "type": "page"
+      },
+      "lab_1": "Lab 1",
+      "lab_2": "Lab 2",
+      "lab_3": "Lab 3",
+      "lab_4": "Lab 4",
+      "lab_5": "Lab 5",
+      "lab_6": "Lab 6",
+      "lab_7": "Lab 7",
+      "lab_8": "Lab 8",
+      "lab_9": "Lab 9",
+      "lab_10": "Lab 10",
+      "lab_11": "Lab 11",
+      "lab_12": "Lab 12",
+      "lab_13": "Lab 13",
+      "lab_14": "Lab 14",
+      "lab_15": "Lab 15"
+
+  }

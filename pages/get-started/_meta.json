@@ -1,0 +1,13 @@
+{
+    "index": "Installation",
+    "setup": "Setup a new project in Quartus Lite Software",
+    "verilog": "Implement a function using Verilog HDL",
+    "testbench": "Implement a testbench for the Verilog module",
+    "modelsim": "Simulate the Verilog circuit using ModelSim + Verilog test bench",
+    "pin": "Pin assignment and Constraint generation",
+    "program-de10": " Synthesize, Implement, Generate, and Program DE10-Lite board "
+
+
+
+
+  }

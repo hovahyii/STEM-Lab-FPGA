@@ -1,0 +1,29 @@
+## Synthesize, Implement, Generate, and Program DE10-Lite board 
+
+After creating your design you must compile it to convert the design into a bitstream that can be downloaded into the FPGA. 
+
+> The most important output of compilation is an SRAM Object File (.sof), which you use to program the device. 
+
+
+1. In the task window – double click compile design or 
+2. In the Processing menu, choose Start Compilation or  
+3. click the Play button on the toolbar (cntrl+L). 
+4. After compiling and verifying your design you are ready to program the FPGA on the development board. You download the SOF you just created into the FPGA using the USB-Blaster circuitry on the board. Set up your hardware for programming using the following steps:  
+a. For the DE10-Lite board, connect the USB-Blaster (included in your development kit) to pin J3 and the other end of the USB cable to the host computer.  
+5. Program the FPGA using the following steps.  
+a. Choose Tools > Programmer. Once the Programmer window opens, click Hardware Setup. 
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/programmer.png)
+
+If it is not already turned on, turn on the DE10-Lite [USB-0] option under currently selected hardware.
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/hardware-setup.png)
+
+6. Select FPGA device and click Add File to program the FPGA with the relevant .sof file(hexTo7Seg.sof in this case).
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/sof-file.png)
+
+7. click Start to program the .sof file into FPGA and make sure the progress bar reflects success and not failure.
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/success.png)
+
+8. When you verify the design in hardware, observe the runtime behavior of the FPGA hardware and ensure that it is functioning appropriately. 
+a. Play around with the switches (SW0-SW3) and see the 7-segment display varying . 
+
+<center>“Congratulations, you have created, compiled, and programmed your first FPGA design! The compiled SRAM Object File (.sof) is loaded onto the FPGA on the development board and the design should be running.”</center>

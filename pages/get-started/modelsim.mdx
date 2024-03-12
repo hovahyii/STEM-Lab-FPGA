@@ -1,0 +1,85 @@
+## Simulate the Verilog circuit using ModelSim + Verilog test bench  
+
+1. To setup the simulation Tool path for ModelSim-Altera, navigate to Assignments→ Settings and modify the simulation parameters as shown below.
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/settings.png)
+
+2. Under EDA Tool settings, check on Simulation option and it should show the Tool name as ModelSim-Altera. 
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/simulation.png)
+
+3. Output directory can be e.g. /simulation/modelsim. Then these new directories are created under the working directory, and the different Modelsim output files (.vo, .sdo) are placed here.
+
+4. Navigate to More EDA Netlist Writer settings and set the generate functional simulation netlist option to ON: click OK and Apply. 
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/more-eda.png)
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/functional-simulation.png)
+
+5. You can automate the modelsim execution (compile/simulate) by setting up the testbench parameters in quartus software as follows. Enter the information about the testbench file under NativeLink settings.  
+
+    a. Select Compile test bench  
+    b. Click Test Benches. The Test Benches dialog box appears.  
+    c. Click New. The New Test Bench Settings dialog box appears.  
+    d. Enter the test bench details from your design: 
+
+        1. The Test bench name can be any suitable name by your choice. This name will later appear in the Compile test bench list.  
+        2. The Top level module in test bench must be the name of the entity of your testbench file.  
+    
+    e. You can also limit the simulation end time by entering a time limit in terms (us/ps/ms) in the **end simulation at** dialog box. 
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/edit-testbench.png)
+
+6. To setup the simulation executable path, click on Tools> Options> EDA Tool Options and and set the Modelsim-Altera path to your installation directory. 
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/eda-tool-options.png)
+
+### Analysis & Synthesis
+
+7. After you have finished coding up your modules, double click on Analysis & Synthesis under the Tasks pane. If you do not see Analysis & Synthesis, double check that Flow is set to Compilation. This will compile and synthesize your program(s). If there are no errors, you will see a pop-up saying the Analysis & Compilation was successful. If not, it will tell you your errors in the messages pane at the bottom of the screen. It is good habit to just review your warnings (if any) to ensure you have no latches or other design hazards.
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/compilation.png)
+
+8. Once the Analysis & Synthesis is successful, you can do a RTL Simulation. Go to Tools-->Run Simulation Tool-->RTL Simulation. 
+a. Now, if you have setup the testbench setup in nativelink settings as described before, the modelsim window will automatically compile/simulate the testbench mentioned there and will dump the port level signals from the top level module onto waveform. 
+b. If you have not mentioned any testbench settings, you can follow the steps from next bullet to compile/simulate the design in Modelsim.
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/rtl-simulation.png)
+
+9. Go to Compile-->Compile. Ensure that the Library is work and navigate to your project directory. Select all Verilog HDL Files that pertain to your project. This includes the testbench. Hit Compile and then Done.
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/compile.png)
+
+10. If you look at the bottom in the Transcript pane, you will see that it did compile and there were no errors. The work library should have all the files you just compiled. If not, repeat the previous step. Since the testbench does the signal generations and testing, double click on your testbench file.
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/work.png)
+
+11. Click Simulate> Start simulation . Under work select the module to be simulated and click ok. 
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/start-simulation.png)
+
+12. The next step is to add signals to the wave and show the wave if it is not already present. On the left, in the sim pane, right click on the testbench file which should be the top most file. Go to Add->To Wave->All signals in region.
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/all-signals.png)
+
+13. In the Wave pane, you will see all the signals declared and used in the testbench. 
+
+> Note - When dealing with signals that are many bits, it is easier to see its value as an unsigned integer/Hex rather than binary. To make this conversion, right click on the signal you want, go to Radix and choose the format you want.
+
+14. You are now ready to simulate your program. The icons boxed in the below screenshot are used to run the testbench. 
+- The first icon is Restart which will reset the simulation as if you never ran it. This is helpful to rerun the simulation without recompiling everything. 
+- The Run Length allows you to enter a specific amount of time you want the program to run for. It defaults to pico-seconds, but nano-seconds is the best time to use. 
+- The icon Run right after the Run Length is to run your program for the amount of time specified in the Run Length. If you set Run Length to be 10 ns, each time you press Run, the program will continue for 10 ns. 
+- Continue Run will run the program until it terminates. 
+- The same is true for Run -All. 
+All the programs in this class will terminate in less than one second. If you find yourself waiting for longer than a few seconds until the program terminates, hit the Stop button and recheck your logic. you will see the following screen once your program terminates. It shows you where the program terminated. To go back to the Wave, click on the Wave tab.
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/icons.png)
+
+15. Once you click Run, you should see something like this on your Wave with values propagated and reflected on all the intended signals in the wave.
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/wave-with-values.png)
+
+16. If you expand or scroll through the Transcript pane, you will see the output of any $display statements you have in your code.
+
+![Intel® Quartus® Prime Lite Edition Design Software](/get-started/Transcript.png)
