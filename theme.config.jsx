@@ -58,6 +58,8 @@ export default {
             }
           ],
           additionalMetaTags: [
+            { content: 'STEM Lab FPGA: Inspiring STEM Education Through FPGA Technology', name: 'title'},
+            { content: 'Welcome to STEM Lab FPGA! We are passionate engineering lecturers dedicated to promoting STEM education. Learn about FPGA, DE10-lite, and meet our team led by Jehovah Yii Zui Hon and Prof Madya Ir. Dr. Nurul Hazlina Noordin.', name: 'description'},
             { content: 'en', httpEquiv: 'Content-Language' },
             { content: 'STEM Lab FPGA', name: 'apple-mobile-web-app-title' },
             { content: '#fff', name: 'msapplication-TileColor' },
@@ -66,6 +68,8 @@ export default {
           description:
             frontMatter.description || 'STEM Lab FPGA',
           openGraph: {
+            title: 'STEM Lab FPGA: Inspiring STEM Education Through FPGA Technology',
+            description: 'Welcome to STEM Lab FPGA! We are passionate engineering lecturers dedicated to promoting STEM education. Learn about FPGA, DE10-lite, and meet our team led by Jehovah Yii Zui Hon and Prof Madya Ir. Dr. Nurul Hazlina Noordin.',
             images: [
               { url: frontMatter.image || 'https://stem-lab-fpga.vercel.app/logostem3a.jpg' }
             ]
