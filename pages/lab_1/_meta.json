@@ -1,5 +1,5 @@
 {
     "index": "Overview of FPGA architecture",
     "quartus-prime": "Introduction to the Quartus Prime development environment",
-    "de10-lite": "Blinking LEDs on the DE10-Lite board"
+    "led": "Blinking LEDs on the DE10-Lite board"
   }

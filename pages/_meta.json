@@ -20,9 +20,9 @@
         "title": "Contact Us",
         "type": "page"
       },
-      "lab_1": "Lab 1",
-      "lab_2": "Lab 2",
-      "lab_3": "Lab 3",
+      "lab_1": "Lab 1: Introduction to FPGA Programming",
+      "lab_2": "Lab 2: Switch Inputs and Debouncing",
+      "lab_3": "Lab 3: Seven-Segment Display and Multiplexing",
       "lab_4": "Lab 4",
       "lab_5": "Lab 5",
       "lab_6": "Lab 6",
