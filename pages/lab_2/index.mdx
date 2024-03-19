@@ -1,1 +1,62 @@
 ## Using switches as inputs to control LEDs.
+
+### Verilog HDL code
+```
+module Switch_LED_Control   (
+    input wire [9:0] switches,   // 10 switches connected to FPGA
+    output reg [9:0] leds        // 10 LEDs connected to FPGA
+);
+
+// Assign switch values to LED outputs
+always @* begin
+    // LEDR0 controlled by sw0
+    leds[0] = switches[0];
+    // LEDR1 controlled by sw1
+    leds[1] = switches[1];
+    // LEDR2 controlled by sw2
+    leds[2] = switches[2];
+    // Similarly, continue for other LEDs and switches
+    // LEDR3 controlled by sw3
+    leds[3] = switches[3];
+    // LEDR4 controlled by sw4
+    leds[4] = switches[4];
+    // LEDR5 controlled by sw5
+    leds[5] = switches[5];
+    // LEDR6 controlled by sw6
+    leds[6] = switches[6];
+    // LEDR7 controlled by sw7
+    leds[7] = switches[7];
+    // LEDR8 controlled by sw8
+    leds[8] = switches[8];
+    // LEDR9 controlled by sw9
+    leds[9] = switches[9];
+end
+
+endmodule
+
+```
+
+### Pin Planner
+
+| Node Name | Direction | Location | I/O Bank | VREF Group | Fitter Location |
+|-----------|-----------|----------|----------|------------|-----------------|
+| switches[9] | Input    | PIN_F15  | 7        | B7_N0      | PIN_F15         |
+| switches[8] | Input    | PIN_B14  | 7        | B7_N0      | PIN_B14         |
+| switches[7] | Input    | PIN_A14  | 7        | B7_N0      | PIN_A14         |
+| switches[6] | Input    | PIN_A13  | 7        | B7_N0      | PIN_A13         |
+| switches[5] | Input    | PIN_B12  | 7        | B7_N0      | PIN_B12         |
+| switches[4] | Input    | PIN_A12  | 7        | B7_N0      | PIN_A12         |
+| switches[3] | Input    | PIN_C12  | 7        | B7_N0      | PIN_C12         |
+| switches[2] | Input    | PIN_D12  | 7        | B7_N0      | PIN_D12         |
+| switches[1] | Input    | PIN_C11  | 7        | B7_N0      | PIN_C11         |
+| switches[0] | Input    | PIN_C10  | 7        | B7_N0      | PIN_C10         |
+| leds[9]    | Output   | PIN_B11  | 7        | B7_N0      | PIN_B11         |
+| leds[8]    | Output   | PIN_A11  | 7        | B7_N0      | PIN_A11         |
+| leds[7]    | Output   | PIN_D14  | 7        | B7_N0      | PIN_D14         |
+| leds[6]    | Output   | PIN_E14  | 7        | B7_N0      | PIN_E14         |
+| leds[5]    | Output   | PIN_C13  | 7        | B7_N0      | PIN_C13         |
+| leds[4]    | Output   | PIN_D13  | 7        | B7_N0      | PIN_D13         |
+| leds[3]    | Output   | PIN_B10  | 7        | B7_N0      | PIN_B10         |
+| leds[2]    | Output   | PIN_A10  | 7        | B7_N0      | PIN_A10         |
+| leds[1]    | Output   | PIN_A9   | 7        | B7_N0      | PIN_A9          |
+| leds[0]    | Output   | PIN_A8   | 7        | B7_N0      | PIN_A8          |

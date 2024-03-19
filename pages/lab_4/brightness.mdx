@@ -1,0 +1,40 @@
+## Controlling LED brightness using PWM.
+
+### Code
+```
+module pwm(
+    input clk,           // Clock input
+    input [7:0] duty,    // Duty cycle input
+    output reg pwm_out   // PWM output
+);
+reg [7:0] counter = 0;
+
+always @(posedge clk) begin
+    counter <= counter + 1;
+    pwm_out <= (counter < duty) ? 1'b1 : 1'b0;
+end
+endmodule
+
+
+```
+
+### Pin Planner
+| Node Name | Direction | Location | I/O Bank | VREF Group | Fitter Location | I/O Standard |
+|-----------|-----------|----------|----------|------------|-----------------|--------------|
+| clk       | Input     | PIN_P11  | 3        | B3_N0      | PIN_P11         | 2.5 V        |
+| duty[7]   | Input     | PIN_A14  | 7        | B7_N0      | PIN_A14         | 2.5 V        |
+| duty[6]   | Input     | PIN_A13  | 7        | B7_N0      | PIN_A13         | 2.5 V        |
+| duty[5]   | Input     | PIN_B12  | 7        | B7_N0      | PIN_B12         | 2.5 V        |
+| duty[4]   | Input     | PIN_A12  | 7        | B7_N0      | PIN_A12         | 2.5 V        |
+| duty[3]   | Input     | PIN_C12  | 7        | B7_N0      | PIN_C12         | 2.5 V        |
+| duty[2]   | Input     | PIN_D12  | 7        | B7_N0      | PIN_D12         | 2.5 V        |
+| duty[1]   | Input     | PIN_C11  | 7        | B7_N0      | PIN_C11         | 2.5 V        |
+| duty[0]   | Input     | PIN_C10  | 7        | B7_N0      | PIN_C10         | 2.5 V        |
+| pwm_out   | Output    | PIN_A8   | 7        | B7_N0      | PIN_A8          | 2.5 V        |
+
+### Result
+
+<video width="full" height="240" controls autoplay muted>
+  <source src="/lab_4/output.mp4" type="video/mp4" mute />
+  Your browser does not support the video tag.
+</video>

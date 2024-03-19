@@ -23,8 +23,8 @@
       "lab_1": "Lab 1: Introduction to FPGA Programming",
       "lab_2": "Lab 2: Switch Inputs and Debouncing",
       "lab_3": "Lab 3: Seven-Segment Display and Multiplexing",
-      "lab_4": "Lab 4",
-      "lab_5": "Lab 5",
+      "lab_4": "Lab 4: PWM Generation",
+      "lab_5": "Lab 5: Analog-to-Digital Conversion (ADC)",
       "lab_6": "Lab 6",
       "lab_7": "Lab 7",
       "lab_8": "Lab 8",
@@ -34,6 +34,7 @@
       "lab_12": "Lab 12",
       "lab_13": "Lab 13",
       "lab_14": "Lab 14",
-      "lab_15": "Lab 15"
+      "lab_15": "Lab 15",
+      "counter": "Counter using button"
 
   }

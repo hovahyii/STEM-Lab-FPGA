@@ -1,4 +1,5 @@
 {
-    "index": "Using switches as inputs to control LEDs."
-   
+    "index": "Using switches as inputs to control LEDs.",
+    "debounce": "Implementing debounce logic for switch inputs."
+
   }

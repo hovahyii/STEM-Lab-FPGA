@@ -1,0 +1,5 @@
+{
+    "index": "Interface with an external potentiometer.",
+    "adc": "Convert analog signals to digital using the DE10-Lite's ADC."
+
+}

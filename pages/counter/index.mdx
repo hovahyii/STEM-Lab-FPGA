@@ -1,0 +1,80 @@
+## Counter using Button
+
+### Code
+```
+module ADC(
+    input clk,          // Clock signal
+    input btn,          // Button input
+    output [6:0] seg    // 7-segment display output
+);
+
+reg [3:0] count = 4'd0; // 4-bit counter to hold the value
+reg last_state = 0;     // Last state of the button
+
+// Debounce logic for the button press
+reg [19:0] debounce_reg = 20'd0;
+always @(posedge clk) begin
+    debounce_reg <= debounce_reg << 1 | btn;
+end
+
+wire btn_pressed = (debounce_reg == 20'b11111111111111111111);
+
+// Edge detection logic
+wire btn_edge = btn_pressed && !last_state;
+
+// Counter logic
+always @(posedge clk) begin
+    if (btn_edge) begin
+        if (count == 9)
+            count <= 0;
+        else
+            count <= count + 1;
+    end
+    last_state <= btn_pressed; // Update the last state
+end
+
+// 7-segment display decoder
+reg [6:0] seg_reg;
+always @(*) begin
+    case (count)
+        4'd0: seg_reg = 7'b1000000; // 0
+        4'd1: seg_reg = 7'b1111001; // 1
+        4'd2: seg_reg = 7'b0100100; // 2
+        4'd3: seg_reg = 7'b0110000; // 3
+        4'd4: seg_reg = 7'b0011001; // 4
+        4'd5: seg_reg = 7'b0010010; // 5
+        4'd6: seg_reg = 7'b0000010; // 6
+        4'd7: seg_reg = 7'b1111000; // 7
+        4'd8: seg_reg = 7'b0000000; // 8
+        4'd9: seg_reg = 7'b0010000; // 9
+        default: seg_reg = 7'b1111111; // Off
+    endcase
+end
+
+assign seg = seg_reg;
+
+endmodule
+
+```
+
+### Pin Planner
+| Node Name | Direction | Location | I/O Bank | VREF Group | Fitter Location |
+|-----------|-----------|----------|----------|------------|-----------------|
+| btn       | Input     | PIN_B8   | 7        | B7_N0      | PIN_B8          |
+| clk       | Input     | PIN_P11  | 3        | B3_N0      | PIN_P11         |
+| seg[6]    | Output    | PIN_C17  | 7        | B7_N0      | PIN_C17         |
+| seg[5]    | Output    | PIN_D17  | 7        | B7_N0      | PIN_D17         |
+| seg[4]    | Output    | PIN_E16  | 7        | B7_N0      | PIN_E16         |
+| seg[3]    | Output    | PIN_C16  | 7        | B7_N0      | PIN_C16         |
+| seg[2]    | Output    | PIN_C15  | 7        | B7_N0      | PIN_C15         |
+| seg[1]    | Output    | PIN_E15  | 7        | B7_N0      | PIN_E15         |
+| seg[0]    | Output    | PIN_C14  | 7        | B7_N0      | PIN_C14         |
+| rst       | Unknown   | PIN_A7   | 7        | B7_N0      | -               |
+
+
+
+### Output
+<video width="full" height="240" controls autoplay muted>
+  <source src="/counter/output.mp4" type="video/mp4" mute />
+  Your browser does not support the video tag.
+</video>
