@@ -1,0 +1,48 @@
+## Alphabet Segment Display Control
+
+
+### Introduction
+This exercise aims to familiarize students with the basic concepts of interfacing FPGA with a 7-segment display. Using the DE10-Lite board, the task will be to display different characters (A, B, C) on a single 7-segment display based on the input from three switches. Each switch will correspond to one of the characters. This simple project introduces digital design students to FPGA programming, handling I/O, and simple decision structures in Verilog HDL.
+
+
+### Verilog Code
+
+```
+module alphabet(
+    input wire [2:0] switch,
+    output reg [6:0] seg
+);
+
+  
+    parameter A_SEG = 7'b0001000;  // Display "A"
+    parameter B_SEG = 7'b0000011;  // Display "B"
+    parameter C_SEG = 7'b1000110;  // Display "C"
+
+    always @ (switch) begin
+        case (switch)
+            3'b001: seg = A_SEG;  // When switch[0] is ON
+            3'b010: seg = B_SEG;  // When switch[1] is ON
+            3'b100: seg = C_SEG;  // When switch[2] is ON
+            default: seg = 7'b1111111;  // Off state (all segments off)
+        endcase
+    end
+endmodule
+
+
+```
+
+### Pin Planner
+
+| Node Name       | Direction | Location | I/O Bank | VREF Group | Current Strength | Slew Rate |
+|-----------------|-----------|----------|----------|------------|------------------|-----------|
+| switch[0]    | Input     | PIN_C10  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) |
+| switch[1]    | Input     | PIN_C11  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) |
+| switch[2]    | Input     | PIN_D12  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) |
+| seven_seg_out[0]| Output    | PIN_C14  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) | 2 (default) |
+| seven_seg_out[1]| Output    | PIN_E15  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) | 2 (default) |
+| seven_seg_out[2]| Output    | PIN_C15  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) | 2 (default) |
+| seven_seg_out[3]| Output    | PIN_C16  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) | 2 (default) |
+| seven_seg_out[4]| Output    | PIN_E16  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) | 2 (default) |
+| seven_seg_out[5]| Output    | PIN_D17  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) | 2 (default) |
+| seven_seg_out[6]| Output    | PIN_C17  | 7        | B7_N0      | 3.3-V LVTTL      | 8mA (default) | 2 (default) |
+

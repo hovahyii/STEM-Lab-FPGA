@@ -2,9 +2,15 @@
 
 In this lab, students will learn about the concept of debounce logic and its significance in digital systems. They will study Schmitt trigger inputs, which introduce hysteresis to the input signal, improving noise immunity and acting as a switch debouncer. Students will understand how Schmitt triggers help stabilize switch inputs by ensuring that a stable output is produced even in the presence of noisy or bouncing signals.
 
-### Lab Objectives:
-- Understand the importance of debounce logic in digital systems and implement debounce logic for switch inputs using Verilog HDL.
--  Learn about Schmitt trigger inputs and their role in improving noise immunity and switch debouncing in digital systems.
+### Lab Objective:
+To learn and implement button debouncing techniques in Verilog and to utilize the SignalTap II Logic Analyzer to monitor and verify the functionality and stability of the debounced signals in real-time.
+
+### Required Tools and Components
+- Intel Quartus Prime (with SignalTap II Logic Analyzer).
+- DE10-Lite FPGA Development Board.
+- USB cable for FPGA programming and debugging.
+- Computers with Quartus Prime installed.
+
 
 ###  Pin Assignment of Push-buttons
 | Signal Name | FPGA Pin No. | Description      | I/O Standard |
@@ -12,77 +18,96 @@ In this lab, students will learn about the concept of debounce logic and its sig
 | KEY0        | PIN_B8       | Push-button[0]  | 3.3 V SCHMITT TRIGGER |
 | KEY1        | PIN_A7       | Push-button[1]  | 3.3 V SCHMITT TRIGGER |
 
+### Lab Setup and Implementation Guide
 
-### Verilog HDL code
+#### Verilog HDL code
 ```
-module SwitchInputs (
-    input wire clk,               // Clock input
-    input wire rst,               // Reset input
-    input wire single_switch,     // Single switch input
-    output reg led_r0            // LEDR0 output
+module debounce(
+    input CLOCK_50,
+    input [1:0] KEY,
+    output [7:0] LED
 );
 
-// Parameter to adjust debounce delay (in clock cycles)
-parameter DELAY = 10;  // Adjust as needed
+    reg [1:0] KEY_reg;           // Previous state of KEY
+    reg [1:0] KEY_stable;        // Stable state of KEY after debouncing
+    reg [19:0] debounce_count0 = 0;  // Debounce counter for KEY[0]
+    reg [19:0] debounce_count1 = 0;  // Debounce counter for KEY[1]
+    reg [7:0] count = 0;         // Main counter for button presses
 
-// Internal debounced switch signals
-reg debounced_switch;
+    // Parameters for debounce threshold
+    parameter DEBOUNCE_LIMIT = 20'hFFFFF; // Adjust this threshold as needed for your environment
 
-// Debounce process for switch inputs
-always @(posedge clk or posedge rst) begin
-    if (rst) begin
-        // Reset debounced switch state
-        debounced_switch <= 1'b0;
-    end else begin
-        // Apply Schmitt trigger input for the single switch
-        if (single_switch != debounced_switch) begin
-            // If the current switch state is different from the debounced state,
-            // wait for the debounce delay before updating the debounced state
-            #DELAY;
-            debounced_switch <= single_switch;
+    always @(posedge CLOCK_50) begin
+        // Debouncing for KEY[0]
+        if (KEY[0] == KEY_reg[0]) begin
+            debounce_count0 <= 0;
+        end else begin
+            if (debounce_count0 < DEBOUNCE_LIMIT)
+                debounce_count0 <= debounce_count0 + 1;
+            else begin
+                KEY_stable[0] <= KEY[0];
+                debounce_count0 <= 0;
+            end
         end
-    end
-end
 
-// LED control based on debounced switch input
-always @* begin
-    // If the switch is pressed (debounced), light up LEDR0
-    if (debounced_switch)
-        led_r0 = 1'b1;
-    else
-        led_r0 = 1'b0;
-end
+        // Debouncing for KEY[1]
+        if (KEY[1] == KEY_reg[1]) begin
+            debounce_count1 <= 0;
+        end else begin
+            if (debounce_count1 < DEBOUNCE_LIMIT)
+                debounce_count1 <= debounce_count1 + 1;
+            else begin
+                KEY_stable[1] <= KEY[1];
+                debounce_count1 <= 0;
+            end
+        end
+
+        KEY_reg <= KEY;  // Update the previous state of KEY
+
+        // Increment main count on falling edge of debounced KEY[0]
+        if (KEY_stable[0] == 0 && KEY_reg[0] == 1)
+            count <= count + 1;
+
+        // Reset count on falling edge of debounced KEY[1]
+        if (KEY_stable[1] == 0 && KEY_reg[1] == 1)
+            count <= 0;
+    end
+
+    assign LED = count;  // Display count on LEDs
 
 endmodule
+
 ```
 
-This Verilog module implements switch debounce logic and controls an LED output based on the debounced state of a single switch input. Here's a brief explanation of the code:
+#### Pin Planner
 
-1. The module is named SwitchInputs and has inputs for clock (clk), reset (rst), and a single switch (single_switch) as well as an output for controlling an LED (led_r0).
-
-2. Debounce Delay Parameter: The DELAY parameter is used to adjust the debounce delay in clock cycles.
-
-3. Internal Signals: The module declares an internal signal debounced_switch to store the debounced state of the single switch input.
-
-4. Debounce Process: An always block is triggered on the positive edge of the clock or the positive edge of the reset signal. Within this block, debounce logic is applied to the single switch input.
-
-5. Debounce Logic: If the switch state changes, the module waits for the debounce delay before updating the debounced state. This helps filter out noise or bouncing signals from the switch.
-
-6. LED Control: Another always block continuously monitors the debounced switch state and controls the LED output (led_r0) accordingly. If the switch is pressed (debounced), the LED is turned on; otherwise, it is turned off.
-
-Overall, this module ensures reliable operation by stabilizing the switch input and providing consistent LED output based on the debounced switch state.
-
-### Pin Planner
-
-| Node Name      | Direction | Location | I/O Bank | VREF Group | Fitter Location |
-|----------------|-----------|----------|----------|------------|-----------------|
-| clk            | Input     | PIN_P11  | 3        | B3_N0      | PIN_P11         |
-| led_r0         | Output    | PIN_A8   | 7        | B7_N0      | PIN_A8          |
-| rst            | Input     | PIN_B8   | 7        | B7_N0      | PIN_B8          |
-| single_switch  | Input     | PIN_C10  | 7        | B7_N0      | PIN_C10         |
-| key0           | Unknown   | PIN_A7   | 7        | B7_N0      |                 |
+| Node Name | Direction | Location | I/O Standard |
+|-----------|-----------|----------|--------------|
+| CLOCK_50  | Input     | PIN_P11  | 3            |
+| KEY[1]    | Input     | PIN_A7   | 7            |
+| KEY[0]    | Input     | PIN_B4   | 8            |
+| LED[7]    | Output    | PIN_D14  | 7            |
+| LED[6]    | Output    | PIN_E14  | 7            |
+| LED[5]    | Output    | PIN_C13  | 7            |
+| LED[4]    | Output    | PIN_D13  | 7            |
+| LED[3]    | Output    | PIN_B10  | 7            |
+| LED[2]    | Output    | PIN_A10  | 7            |
+| LED[1]    | Output    | PIN_A9   | 7            |
+| LED[0]    | Output    | PIN_A8   | 7            |
 
 
+#### Explanation 
+This Verilog module named debounce is designed to handle button inputs from a two-button setup (KEY[0] and KEY[1]), apply debouncing to these inputs, and display the result on an 8-bit LED display. Debouncing is essential for reliable digital input from mechanical buttons or switches, which often generate noisy signals when pressed or released.
 
 
+#### Setting Up Signal Tap Logic Analyzer
+1. Go to Tools > SignalTap II Logic Analyzer.
+2. Add a new SignalTap II file to your project.
+3. Insert KEY, KEY_reg, KEY_stable, debounce_count0, and debounce_count1 into the SignalTap setup.
+4. Set trigger conditions to capture the falling edge of KEY[0] and KEY[1].
 
+![Signal Tap Setup](/lab_2/signal_tap_setup.png)
+
+
+### Output
+![Graph Result](/lab_2/graph.png)
