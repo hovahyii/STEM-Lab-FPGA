@@ -2,35 +2,69 @@
 
 ### Code
 ```
-module pwm(
+module pwm_brightness(
     input clk,           // Clock input
     input [7:0] duty,    // Duty cycle input
-    output reg pwm_out   // PWM output
+    output reg pwm_out,  // PWM output
+    output reg LEDR1,
+    output reg LEDR2,
+    output reg LEDR3,
+    output reg LEDR4,
+    output reg LEDR5,
+    output reg LEDR6,
+    output reg LEDR7,
+    output reg LEDR8,
+    output reg LEDR9
 );
-reg [7:0] counter = 0;
+    // Initialize all LEDs except LEDR0 to 'off'
+    initial begin
+        LEDR1 = 0;
+        LEDR2 = 0;
+        LEDR3 = 0;
+        LEDR4 = 0;
+        LEDR5 = 0;
+        LEDR6 = 0;
+        LEDR7 = 0;
+        LEDR8 = 0;
+        LEDR9 = 0;
+    end
 
-always @(posedge clk) begin
-    counter <= counter + 1;
-    pwm_out <= (counter < duty) ? 1'b1 : 1'b0;
-end
+    reg [7:0] counter = 0;
+
+    // PWM logic
+    always @(posedge clk) begin
+        counter <= counter + 1;
+        pwm_out <= (counter < duty) ? 1'b1 : 1'b0;
+    end
 endmodule
+
 
 
 ```
 
 ### Pin Planner
-| Node Name | Direction | Location | I/O Bank | VREF Group | Fitter Location | I/O Standard |
-|-----------|-----------|----------|----------|------------|-----------------|--------------|
-| clk       | Input     | PIN_P11  | 3        | B3_N0      | PIN_P11         | 2.5 V        |
-| duty[7]   | Input     | PIN_A14  | 7        | B7_N0      | PIN_A14         | 2.5 V        |
-| duty[6]   | Input     | PIN_A13  | 7        | B7_N0      | PIN_A13         | 2.5 V        |
-| duty[5]   | Input     | PIN_B12  | 7        | B7_N0      | PIN_B12         | 2.5 V        |
-| duty[4]   | Input     | PIN_A12  | 7        | B7_N0      | PIN_A12         | 2.5 V        |
-| duty[3]   | Input     | PIN_C12  | 7        | B7_N0      | PIN_C12         | 2.5 V        |
-| duty[2]   | Input     | PIN_D12  | 7        | B7_N0      | PIN_D12         | 2.5 V        |
-| duty[1]   | Input     | PIN_C11  | 7        | B7_N0      | PIN_C11         | 2.5 V        |
-| duty[0]   | Input     | PIN_C10  | 7        | B7_N0      | PIN_C10         | 2.5 V        |
-| pwm_out   | Output    | PIN_A8   | 7        | B7_N0      | PIN_A8          | 2.5 V        |
+| Node Name | Direction | Location |
+|-----------|-----------|----------|
+| LEDR1     | Output    | PIN_A9   |
+| LEDR2     | Output    | PIN_A10  |
+| LEDR3     | Output    | PIN_B10  |
+| LEDR4     | Output    | PIN_D13  |
+| LEDR5     | Output    | PIN_C13  |
+| LEDR6     | Output    | PIN_E14  |
+| LEDR7     | Output    | PIN_D14  |
+| LEDR8     | Output    | PIN_A11  |
+| LEDR9     | Output    | PIN_B11  |
+| clk       | Input     | PIN_P11  |
+| duty[7]   | Input     | PIN_A14  |
+| duty[6]   | Input     | PIN_A13  |
+| duty[5]   | Input     | PIN_B12  |
+| duty[4]   | Input     | PIN_A12  |
+| duty[3]   | Input     | PIN_C12  |
+| duty[2]   | Input     | PIN_D12  |
+| duty[1]   | Input     | PIN_C11  |
+| duty[0]   | Input     | PIN_C10  |
+| pwm_out   | Output    | PIN_A8   |
+
 
 ### Result
 

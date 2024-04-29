@@ -1,1 +1,40 @@
 ## Generating Pulse Width Modulation (PWM) signals.
+
+### Code
+```
+module pwm_signal(
+    input CLOCK_50,       // Clock input
+    input trigger,        // Trigger input to start PWM generation
+    output reg pwm_signal // PWM output signal
+);
+    reg [7:0] counter = 0; // 8-bit counter for PWM duty cycle and timing
+    reg active = 0;        // State to keep track of PWM activation
+
+    always @(posedge CLOCK_50) begin
+        if (trigger && !active) begin
+            active <= 1;        // Activate PWM on rising edge of trigger
+            counter <= 0;       // Reset counter when triggered
+        end else if (active) begin
+            counter <= counter + 1;    // Increment the counter on each clock edge
+            pwm_signal <= (counter < 128) ? 1'b1 : 1'b0;  // Generate PWM based on counter, 50% duty cycle
+        end
+
+        if (!trigger && active) begin
+            active <= 0;        // Deactivate PWM when trigger goes low
+            pwm_signal <= 0;    // Reset PWM signal when not active
+        end
+    end
+endmodule
+```
+
+### Pin Planner
+| Node Name   | Direction | Location  | I/O Bank |
+|-------------|-----------|-----------|----------|
+| CLOCK_50    | Input     | PIN_P11   | 3        |
+| pwm_signal  | Output    | PIN_A8    | 7        |
+| trigger     | Input     | PIN_B8    | 7        |
+
+
+
+### Output
+![PWM Signal](/lab_4/output.png)
